@@ -470,9 +470,9 @@ for time = 0:0.001:1
 
 %     Set Input Signals
     if(time >= 0.03)
-        Vin1 = 1;   
-%         f = (1/0.03);
-%         Vin1 = sin(2*pi*f*time);
+%         Vin1 = 1;   
+        f = (1/0.03);
+        Vin1 = sin(2*pi*f*time);
     end
     
     

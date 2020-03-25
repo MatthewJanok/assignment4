@@ -453,42 +453,42 @@ Sols = [0; 0; 0; 0; 0; 0; 0; 0;];
 
 
 
-% gPulse = 0.3*randn(1,1000)+1;
-% figure(4)
-% histV = histogram(gPulse);
-% norm = 0;
-% for i = 1:size(histV.Values)
-%     if histV.Values(i)> norm
-%         norm = histV.Values(i);
-%     end
-% end
-%         
+gPulse = 0.3*randn(1,1000)+1;
+figure(4)
+histV = histogram(gPulse);
+norm = 0;
+for i = 1:size(histV.Values)
+    if histV.Values(i)> norm
+        norm = histV.Values(i);
+    end
+end
+        
         
         
 i = 1; 
 for time = 0:0.001:1
 
 %     Set Input Signals
-    if(time >= 0.03)
+%     if(time >= 0.03)
 %         Vin1 = 1;   
-        f = (1/0.03);
-        Vin1 = sin(2*pi*f*time);
+%         f = (1/0.03);
+%         Vin1 = sin(2*pi*f*time);
+%     end
+    
+    
+    
+    if(time>=0.06)
+        
+        i = i +0.1;
+        if i> size(histV.Values)
+            Vin1 = 0;
+        else
+            Vin1 = (histV.Values(floor(i)))/norm;
+        end
+    else 
+        Vin1 = 0;
     end
     
-    
-    
-%     if(time>=0.06)
-%         
-%         i = i +0.1;
-%         if i> size(histV.Values)
-%             Vin1 = 0;
-%         else
-%             Vin1 = (histV.Values(floor(i)))/norm;
-%         end
-%     else 
-%         Vin1 = 0;
-%     end
-%     
     
     
     

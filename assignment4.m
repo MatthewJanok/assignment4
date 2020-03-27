@@ -459,13 +459,13 @@ i = 0;
 for time = 0:0.001:1
 i = i+1;
 %     Set Input Signals
-    if(time >= 0.03)
+%     if(time >= 0.03)
 %         Vin1 = 1;           
-        Vin1 = sin(2*pi*f*time);
-    end
+%         Vin1 = sin(2*pi*f*time);
+%     end
     
-%     gp = exp(-(time-0.136).^2/(2*0.03^2));
-%     Vin1 = gp;
+    gp = exp(-(time-0.136).^2/(2*0.03^2));
+    Vin1 = gp;
     
     
  
@@ -547,36 +547,36 @@ end
 
 
 
+% 
+% %Responses for sinusoidal input
+% freqResp = fft(sV);
+% freqRespS = fftshift(freqResp);
+% 
+% figure(6)
+% hold on
+% plot(timeV, sV)
+% title('Input Signal')
+% 
+% figure(7)
+% hold on
+% plot(abs(fftshift(freqResp)))
+% title('Plot of Frequency Response')
 
-%Responses for sinusoidal input
-freqResp = fft(sV);
+
+
+%Responses for gaussian input
+freqResp = fft(gpV);
 freqRespS = fftshift(freqResp);
 
 figure(6)
 hold on
-plot(timeV, sV)
+plot(timeV, gpV)
 title('Input Signal')
 
 figure(7)
 hold on
 plot(abs(fftshift(freqResp)))
 title('Plot of Frequency Response')
-
-
-
-% %Responses for gaussian input
-% freqResp = fft(gpV);
-% freqRespS = fftshift(freqResp);
-% 
-% figure(6)
-% hold on
-% plot(timeV, freqResp)
-% title('Plot Using fft()')
-% 
-% figure(7)
-% hold on
-% plot(timeV, freqRespS)
-% title('Plot using fftshift()')
 
 
 

@@ -442,9 +442,13 @@ histV5 = zeros(1000,1);
 histC = zeros(1000,1);
 Sols = [0; 0; 0; 0; 0; 0; 0; 0;];
 timeV = linspace(0,1,1000);
-pi = timeV>0.03 & timeV<;
+
+pii = timeV>0.03 & timeV<1;
 pp = zeros(size(timeV));
-pp(pi) = 1;
+pp(pii) = 1;
+
+f = (1/0.03);
+sV = sin(2*pi*f.*timeV);
 
 gpV = exp(-(timeV-0.126).^2/(2*0.03^2));
 % plot(timeV, gp)
@@ -455,14 +459,13 @@ i = 0;
 for time = 0:0.001:1
 i = i+1;
 %     Set Input Signals
-    if(time >= 0.03)
-        Vin1 = 1;   
-%         f = (1/0.03);
+%     if(time >= 0.03)
+%         Vin1 = 1;           
 %         Vin1 = sin(2*pi*f*time);
-    end
+%     end
     
-%     gp = exp(-(time-0.136).^2/(2*0.03^2));
-%     Vin1 = gp;
+    gp = exp(-(time-0.136).^2/(2*0.03^2));
+    Vin1 = gp;
     
     
  
@@ -498,6 +501,11 @@ i = i+1;
     Fu = C*(Sols);
     delF = Fu+F;
 
+
+
+%     Vin1 = 1;
+%     V5old = Sols(5);
+%     V3old = Sols(3);
     
     Sols = (G+C)\delF;
     V3new = Sols(3);
@@ -522,35 +530,37 @@ time
 
 end
 
-%Responses for step input
-freqResp = fft(pp);
-freqRespS = fftshift(freqResp);
-
-figure(6)
-hold on
-plot(abs(fftshift(freqResp)))
-title('Plot of Frequency Response')
-
-figure(7)
-hold on
-plot(timeV, pp)
-title('Plot using fftshift()')
-
-
-
-% %Responses for sinusoidal input
-% freqResp = fft(gpV);
+% %Responses for step input
+% freqResp = fft(pp);
 % freqRespS = fftshift(freqResp);
 % 
 % figure(6)
 % hold on
-% plot(timeV, freqResp)
-% title('Plot Using fft()')
+% plot(timeV, pp)
+% title('Input Signal')
 % 
 % figure(7)
 % hold on
-% plot(timeV, freqRespS)
-% title('Plot using fftshift()')
+% plot(abs(fftshift(freqResp)))
+% title('Plot of Frequency Response')
+
+
+
+
+% 
+% %Responses for sinusoidal input
+% freqResp = fft(sV);
+% freqRespS = fftshift(freqResp);
+% 
+% figure(6)
+% hold on
+% plot(timeV, sV)
+% title('Input Signal')
+% 
+% figure(7)
+% hold on
+% plot(abs(fftshift(freqResp)))
+% title('Plot of Frequency Response')
 
 
 

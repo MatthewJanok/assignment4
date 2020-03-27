@@ -1,3 +1,5 @@
+
+  
 %Question 3
 
 clear
@@ -431,6 +433,10 @@ G3 = 1/R3;
 alpha = 100;
 G4 = 1/0.1;
 Go = 1/1000;
+%     f = linspace(0,1e2,1000);
+%     s = 2*pi*f;
+%     s1 = pi;
+%     V = linspace (-10,10,1000);
 VinOld = 0;
 V3old = 0;
 V5old = 0;
@@ -438,35 +444,57 @@ V3Cold = 0;
 V5Cold = 0;
 told = 0;
 gainold = 0;
+% V3CPold = 0;
+% V5CPold = 0;
+% gainCPold = 0;
+% cpOld = 0;
+% gainCPV = zeros(1000,1);
 histV5 = zeros(1000,1);
 histC = zeros(1000,1);
 Sols = [0; 0; 0; 0; 0; 0; 0; 0;];
-timeV = linspace(0,1,1000);
 
-pii = timeV>0.03 & timeV<1;
-pp = zeros(size(timeV));
-pp(pii) = 1;
 
-f = (1/0.03);
-sV = sin(2*pi*f.*timeV);
 
-gpV = exp(-(timeV-0.126).^2/(2*0.03^2));
-% plot(timeV, gp)
-
+% gPulse = 0.3*randn(1,1000)+1;
+% figure(4)
+% histV = histogram(gPulse);
+% norm = 0;
+% for i = 1:size(histV.Values)
+%     if histV.Values(i)> norm
+%         norm = histV.Values(i);
+%     end
+% end
+%         
         
         
-i = 0; 
+i = 1; 
 for time = 0:0.001:1
-i = i+1;
+
 %     Set Input Signals
     if(time >= 0.03)
-%         Vin1 = 1;           
+%         Vin1 = 1;   
+        f = (1/0.03);
         Vin1 = sin(2*pi*f*time);
     end
     
-%     gp = exp(-(time-0.136).^2/(2*0.03^2));
-%     Vin1 = gp;
     
+    
+%     if(time>=0.06)
+%         
+%         i = i +0.1;
+%         if i> size(histV.Values)
+%             Vin1 = 0;
+%         else
+%             Vin1 = (histV.Values(floor(i)))/norm;
+%         end
+%     else 
+%         Vin1 = 0;
+%     end
+%     
+    
+    
+    
+
     
  
 
@@ -522,76 +550,56 @@ i = i+1;
     VinOld = Vin1;  
     told = time;
     
+    
+    
+    
+%     CSols = (G+C)\F1';
+%     V3Cnew = CSols(3);
+%     V5Cnew = CSols(5);
+%     gain = V5Cnew/Vin1;
+%     
+%     figure(4)
+%     hold on
+%     plot([told time], [V5Cold V5Cnew],'g',[told time],[gainold gain],'m')
+%     title('Gain Graph')
+%     xlabel('Time (s)')
+%     ylabel('Gain (dB)')
+% 
+%     V3Cold = V3Cnew;
+%     V5Cold = V5Cnew;
+%     told = time;
+%     gainold = gain;
+
+    
+    
+%     CPSols = (G+CP)\F1';
+%     V3CPnew = CPSols(3);
+%     V5CPnew = CPSols(5);
+%     gainCP = V5CPnew/Vin1;
+%     
+% %     figure(3)
+% %     plot([cpOld cp(i)],[gainCPold gainCP],'m')
+% %     hold on
+%     
+%     gainCPV(i) = gainCP;
+%     
+% 
+%     
+%     V3CPold = V3CPnew;
+%     V5CPold = V5CPnew;
+% %     sold = s(i);
+%     gainCPold = gainCP;
+%     cpOld = cp(i);
+    
+%     histV5(i) = V5Cnew;
+%     histC(i) = cp;
    
     
-  
+    
+    
+   
 time
-
-
 end
-
-% %Responses for step input
-% freqResp = fft(pp);
-% freqRespS = fftshift(freqResp);
-% 
-% figure(6)
-% hold on
-% plot(timeV, pp)
-% title('Input Signal')
-% 
-% figure(7)
-% hold on
-% plot(abs(fftshift(freqResp)))
-% title('Plot of Frequency Response')
-
-
-
-
-
-%Responses for sinusoidal input
-freqResp = fft(sV);
-freqRespS = fftshift(freqResp);
-
-figure(6)
-hold on
-plot(timeV, sV)
-title('Input Signal')
-
-figure(7)
-hold on
-plot(abs(fftshift(freqResp)))
-title('Plot of Frequency Response')
-
-
-
-% %Responses for gaussian input
-% freqResp = fft(gpV);
-% freqRespS = fftshift(freqResp);
-% 
-% figure(6)
-% hold on
-% plot(timeV, freqResp)
-% title('Plot Using fft()')
-% 
-% figure(7)
-% hold on
-% plot(timeV, freqRespS)
-% title('Plot using fftshift()')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

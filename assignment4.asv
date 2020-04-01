@@ -241,7 +241,7 @@ end
 
 R3 = Vx/Curr;
 
-% 
+% % 
 % G1 = 1/1;
 % c = 0.25;
 % G2 = 1/2;
@@ -353,14 +353,23 @@ R3 = Vx/Curr;
 % 
 %     
 %     
-%     CPSols = (G+CP)\F1';
-%     V3CPnew = CPSols(3);
-%     V5CPnew = CPSols(5);
-%     gainCP = V5CPnew/Vin1;
+% %     CPSols = (G+CP)\F1';
+% %     V3CPnew = CPSols(3);
+% %     V5CPnew = CPSols(5);
+% %     gainCP = V5CPnew/Vin1;
 %     
 % %     figure(3)
 % %     plot([cpOld cp(i)],[gainCPold gainCP],'m')
 % %     hold on
+%     
+%   CPSols = (G+CP)\F1';
+%     V3CPnew = CPSols(3);
+%     V5CPnew = CPSols(5);
+%     gainCP = V5CPnew/Vin1;
+%     
+%     figure(3)
+%     plot([cpOld cp(i)],[gainCPold gainCP],'m')
+%     hold on
 %     
 %     gainCPV(i) = gainCP;
 %     
@@ -388,7 +397,7 @@ R3 = Vx/Curr;
 % % 
 % figure(6)
 % histogram(cp)
-% 
+
 
 
 
@@ -541,7 +550,7 @@ R3 = Vx/Curr;
 % % 
 % % figure(7)
 % % hold on
-% % plot(abs(fftshift(freqResp)))
+% % plot(log10(abs(fftshift(freqResp))))
 % % title('Plot of Frequency Response')
 % 
 % 
@@ -559,7 +568,7 @@ R3 = Vx/Curr;
 % % 
 % % figure(7)
 % % hold on
-% % plot(abs(fftshift(freqResp)))
+% % plot(log10(abs(fftshift(freqResp))))
 % % title('Plot of Frequency Response')
 % 
 % 
@@ -575,7 +584,7 @@ R3 = Vx/Curr;
 % 
 % figure(7)
 % hold on
-% plot(abs(fftshift(freqResp)))
+% plot(log10(abs(fftshift(freqResp))))
 % title('Plot of Frequency Response')
 
 
@@ -605,7 +614,7 @@ delt = 0.001;
 
 G1 = 1/1;
 c = 0.25;
-cn = 0.00001;
+cn = 0.0002;
 In = rand(1001,1)*0.001;
 G2 = 1/2;
 L = 0.2;
@@ -624,6 +633,7 @@ histV5 = zeros(1000,1);
 histC = zeros(1000,1);
 Sols = [0; 0; 0; 0; 0; 0; 0; 0; 0;];
 timeV = linspace(0,1,1000);
+V5newV = zeros(1001,1);
 
 pii = timeV>0.03 & timeV<1;
 pp = zeros(size(timeV));
@@ -641,14 +651,14 @@ i = 0;
 for time = 0:0.001:1
 i = i+1;
 %     Set Input Signals
-%     if(time >= 0.03)
-%         Vin1 = 1;           
+    if(time >= 0.03)
+        Vin1 = 1;           
 %         Vin1 = sin(2*pi*f*time);
-%     end
+    end
     
-    gp = exp(-(time-0.136).^2/(2*0.03^2));
-    Vin1 = gp;
-    
+%     gp = exp(-(time-0.136).^2/(2*0.03^2));
+%     Vin1 = gp;
+%     
     
  
 
@@ -694,6 +704,7 @@ i = i+1;
     Sols = (G+C)\delF;
     V3new = Sols(3);
     V5new = Sols(5);
+    V5newV(i) = V5new; 
     figure(5)
     hold on
     plot([told time],[VinOld Vin1],'r', [told time],[V5old V5new], 'g')
@@ -714,24 +725,24 @@ time
 
 end
 
-% %Responses for step input
-% freqResp = fft(pp);
-% freqRespS = fftshift(freqResp);
-% 
-% figure(6)
-% hold on
-% plot(timeV, pp)
-% title('Input Signal')
-% 
-% figure(7)
-% hold on
-% plot(abs(fftshift(freqResp)))
-% title('Plot of Frequency Response')
+%Responses for step input
+freqResp = fft(pp);
+freqRespS = fftshift(freqResp);
+
+figure(6)
+hold on
+plot(timeV, pp)
+title('Input Signal')
+
+figure(7)
+hold on
+plot(log10(abs(fftshift(freqResp))))
+title('Plot of Frequency Response')
 
 
 
 
-% 
+
 % %Responses for sinusoidal input
 % freqResp = fft(sV);
 % freqRespS = fftshift(freqResp);
@@ -743,7 +754,7 @@ end
 % 
 % figure(7)
 % hold on
-% plot(abs(fftshift(freqResp)))
+% plot(log10(abs(fftshift(freqResp))))
 % title('Plot of Frequency Response')
 
 
@@ -752,7 +763,7 @@ end
 freqResp = fft(gpV);
 freqRespS = fftshift(freqResp);
 
-freqRespVo = fft(V5new);
+freqRespVo = fft(V5newV);
 freqRespSVo = fftshift(freqRespVo);
 
 figure(6)
@@ -768,7 +779,7 @@ title('Plot of Frequency Response')
 
 figure(8)
 hold on
-plot(abs(fftshift(freqRespSVo)))
+plot(log10(abs(fftshift(freqRespVo)))
 title('Plot of Frequency Response')
 
 
